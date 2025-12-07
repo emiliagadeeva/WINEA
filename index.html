@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Wine Recommender</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- PapaParse для чтения CSV -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+  <!-- Конфиг с ссылками на Google Drive -->
+  <script src="config.js"></script>
+
+  <!-- Основная логика (ES-module) -->
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>🍷 Wine Recommender</h1>
+      <p>Семантический поиск похожих вин по описанию и предпочтениям.</p>
+    </header>
+
+    <section class="loader" id="loader">
+      Загружаем df.csv и wine_embeddings.json с Google Drive...
+    </section>
+
+    <section class="error" id="error" hidden></section>
+
+    <section class="main" id="main" hidden>
+      <!-- Вкладки -->
+      <div class="tabs">
+        <button class="tab-button active" data-tab="case1">1. По описанию</button>
+        <button class="tab-button" data-tab="case2">2. По описанию + фильтры</button>
+        <button class="tab-button" data-tab="case3">3. По любимым винам</button>
+      </div>
+
+      <!-- Кейc 1 -->
+      <div class="tab-content active" id="case1">
+        <h2>1. Найти похожие вина по описанию</h2>
+        <label>
+          Опиши вино:
+          <textarea id="case1-query"
+            placeholder="Например: rich red wine with notes of cherry and chocolate"></textarea>
+        </label>
+        <button id="case1-run">Найти похожие вина</button>
+
+        <div class="results" id="case1-results"></div>
+      </div>
+
+      <!-- Кейc 2 -->
+      <div class="tab-content" id="case2">
+        <h2>2. По описанию + фильтры</h2>
+        <label>
+          Опиши вино:
+          <textarea id="case2-query"
+            placeholder="Например: crisp white wine with citrus and floral notes"></textarea>
+        </label>
+
+        <div class="filters">
+          <div>
+            <label>
+              Страна:
+              <select id="filter-country">
+                <option value="">Любая</option>
+              </select>
+            </label>
+          </div>
+          <div>
+            <label>
+              Сорт (variety):
+              <select id="filter-variety">
+                <option value="">Любой</option>
+              </select>
+            </label>
+          </div>
+          <div>
+            <label>
+              Максимальная цена:
+              <input type="number" id="filter-max-price" min="0" placeholder="Например: 50" />
+            </label>
+          </div>
+        </div>
+
+        <button id="case2-run">Найти вина с фильтрами</button>
+
+        <div class="results" id="case2-results"></div>
+      </div>
+
+      <!-- Кейc 3 -->
+      <div class="tab-content" id="case3">
+        <h2>3. Похожие вина на выбранные любимые</h2>
+        <p class="hint">
+          Отметь несколько вин, которые тебе нравятся, и мы подберём похожие.
+        </p>
+        <div class="favorites-container">
+          <div class="favorites-list" id="favorites-list">
+            <!-- Заполнится из df.csv -->
+          </div>
+        </div>
+
+        <button id="case3-run">Найти похожие на выбранные</button>
+
+        <div class="results" id="case3-results"></div>
+      </div>
+    </section>
+
+    <footer class="app-footer">
+      Статический фронтенд на GitHub Pages.<br />
+      Все данные и фильтры тянутся строго из df.csv, эмбеддинги — из wine_embeddings.json.
+    </footer>
+  </div>
+</body>
+</html>
