@@ -1,10 +1,12 @@
 // config.js
 
-// CSV из второго линка:
-window.CSV_URL = "https://drive.google.com/uc?export=download&id=18mwRZRlY3f6M6nN6VmiHKzDAAZxfEF7A";
+// CSV с датафреймом
+window.CSV_URL =
+  "https://huggingface.co/datasets/emilia222222/df/resolve/main/df.csv";
 
-// JSON с эмбеддингами из первого линка:
-window.EMBEDDINGS_URL = "https://drive.google.com/uc?export=download&id=1KMy_lZIziIsGI3SE2EInydfZJ6rPWlIE";
+// JSON с эмбеддингами
+window.EMBEDDINGS_URL =
+  "https://huggingface.co/datasets/emilia222222/df/resolve/main/wine_embeddings.json";
 
 // Сколько рекомендаций показывать
 window.DEFAULT_TOP_K = 10;
